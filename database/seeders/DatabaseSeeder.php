@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Clinic;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,11 +17,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $clinic = Clinic::firstOrCreate(
+            ['slug' => 'matriz-odonto'],
+            ['name' => 'Matriz Odonto']
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::firstOrCreate(
+            ['email' => 'dev@admin.com'], // Mude para o seu e-mail de preferência
+            [
+                'name' => 'Developer',
+                'password' => Hash::make('M4rc0nd35'), // A senha será 'M4rc0nd35'
+                'clinic_id' => $clinic->id,
+            ]
+        );
+
+        $this->command->info('Clínica e Usuário Admin criados com sucesso!');
     }
 }
