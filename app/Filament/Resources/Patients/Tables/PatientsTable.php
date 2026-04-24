@@ -3,10 +3,16 @@
 namespace App\Filament\Resources\Patients\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
 class PatientsTable
@@ -48,15 +54,20 @@ class PatientsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TrashedFilter::make()->label('Lixeira'),
             ])
             ->recordActions([
                 ViewAction::make()->label('Ver'),
                 EditAction::make()->label('Editar'),
+                DeleteAction::make()->label('Excluir'),
+                RestoreAction::make()->label('Restaurar'),
+                ForceDeleteAction::make()->label('Excluir Definitavamente'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make()->label('Excluir selecionados'),
+                    RestoreBulkAction::make()->label('Restaurar Selecionados'),
+                    ForceDeleteBulkAction::make()->label('Excluir Definitivamente'),
                 ])->label('Ações em massa'),
             ])
             ->emptyStateHeading('Nenhum paciente encontrado');

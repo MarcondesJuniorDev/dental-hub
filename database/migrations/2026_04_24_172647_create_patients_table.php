@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('birth_date')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
