@@ -1,58 +1,85 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🦷 Dental Hub - ERP Odontológico Sênior
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![PHP Version](https://img.shields.io/badge/php-8.4-777bb4.svg?style=flat-square&logo=php)
+![Laravel Version](https://img.shields.io/badge/laravel-13.x-ff2d20.svg?style=flat-square&logo=laravel)
+![Filament Version](https://img.shields.io/badge/filament-v5-ffca28.svg?style=flat-square&logo=clojure)
+![PostgreSQL](https://img.shields.io/badge/postgresql-16-4169e1.svg?style=flat-square&logo=postgresql)
+![Docker](https://img.shields.io/badge/docker-ready-2496ed.svg?style=flat-square&logo=docker)
 
-## About Laravel
+O **Dental Hub** é uma plataforma SaaS (Software as a Service) de gestão de clínicas odontológicas de alta performance. O projeto foi desenvolvido sob os princípios de **Domain-Driven Design (DDD)** e **Arquitetura Limpa**, garantindo escalabilidade, isolamento de dados (Multi-tenancy) e fácil manutenção.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Diferenciais Técnicos (Stack de Vanguarda)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **PHP 8.4:** Utilização de *Property Hooks*, *Readonly Classes* e tipagem estrita.
+- **Laravel 13:** Otimização de performance e o estado da arte do ecossistema Laravel.
+- **Filament v5:** Interface administrativa de próxima geração para uma UX fluida.
+- **Multi-tenancy:** Isolamento completo de dados por clínica (SaaS).
+- **Arquitetura Limpa (Core/):** Camada de domínio independente de frameworks, facilitando testes e evolução.
+- **Infraestrutura Imutável:** Ambiente totalmente Dockerizado (Nginx, PHP 8.4, PostgreSQL 16, Redis).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📂 Estrutura do Projeto
 
-## Learning Laravel
+Para demonstrar senioridade técnica, o projeto separa a lógica de negócio da infraestrutura do framework:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    ├── app/                # Camada de Infraestrutura (Laravel/Filament)
+    ├── src/                # O Coração do Sistema (Core)
+    │   ├── Domain/         # Entidades, Regras de Negócio e Agregados
+    │   ├── Application/    # Casos de Uso (Use Cases) e DTOs
+    │   └── Infrastructure/ # Implementações de Repositórios e Gateways
+    ├── docker/             # Configurações de ambiente isolado
+    └── database/           # Migrations e Seeders
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Como Rodar o Projeto
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### Pré-requisitos
+- Docker e Docker Compose instalados.
 
-## Agentic Development
+### Passo a Passo
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. **Clonar o repositório:**
+    ```bash
+    git clone git@github.com-mncjdev:MarcondesJuniorDev/dental-hub.git
+    cd dental-hub
+    ```
 
-```bash
-composer require laravel/boost --dev
+2. **Configurar o ambiente:**
+    ```bash
+    cp .env.example .env
+    # Ajuste as variáveis do banco conforme o docker-compose.yml
+    ```
 
-php artisan boost:install
-```
+3. **Subir os containers:**
+    ```bash
+    docker compose up -d --build
+    ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+4. **Instalar dependências e migrar:**
+    ```bash
+    docker compose exec app composer install
+    docker compose exec app php artisan key:generate
+    docker compose exec app php artisan migrate
+    ```
 
-## Contributing
+5. **Criar acesso ao painel:**
+    ```bash
+    docker compose exec app php artisan make:filament-user
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Acesse em: `http://localhost:8000/admin`
 
-## Code of Conduct
+## 📅 Roadmap de Desenvolvimento
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- [x] Infraestrutura Docker (PHP 8.4, PgSQL, Redis)
+- [x] Setup Laravel 13 e Filament v5
+- [ ] Implementação de Multi-tenancy (Clinics)
+- [ ] Módulo de Pacientes e Prontuários
+- [ ] Agenda Inteligente com Validação de Domínio (Overlap Prevention)
+- [ ] Odontograma Visual Dinâmico
+- [ ] Fluxo Financeiro e Orçamentos
 
-## Security Vulnerabilities
+## ⚖️ Licença
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Este projeto é para fins de portfólio e segue a licença MIT.
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+Desenvolvido com ☕ e foco em engenharia de software por **Marcondes Junior**.
