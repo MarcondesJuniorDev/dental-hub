@@ -15,25 +15,35 @@ class PatientsTable
     {
         return $table
             ->columns([
-                TextColumn::make('clinic.name')
-                    ->searchable(),
                 TextColumn::make('name')
+                    ->label('Nome completo')
                     ->searchable(),
+
                 TextColumn::make('cpf')
+                    ->label('CPF')
                     ->searchable(),
+
                 TextColumn::make('phone')
+                    ->label('Telefone')
                     ->searchable(),
+
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label('E-mail')
                     ->searchable(),
+
                 TextColumn::make('birth_date')
+                    ->label('Data de nascimento')
                     ->searchable(),
+
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Cadastrado em')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+
                 TextColumn::make('updated_at')
-                    ->dateTime()
+                    ->label('Atualizado em')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -41,13 +51,14 @@ class PatientsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                ViewAction::make()->label('Ver'),
+                EditAction::make()->label('Editar'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+                    DeleteBulkAction::make()->label('Excluir selecionados'),
+                ])->label('Ações em massa'),
+            ])
+            ->emptyStateHeading('Nenhum paciente encontrado');
     }
 }
